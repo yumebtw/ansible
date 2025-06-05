@@ -1,0 +1,24 @@
+---
+
+- hosts: all
+  become: true
+  tasks:
+
+  - name: update repository for ubuntu
+    tags: always, ubuntu, update, package, apt
+    apt:
+      update_cache: yes
+   # when: ansible_distribution_version
+
+  - name: install apache2 package
+    tags: apache, php, apache2, install
+    apt:
+      name:
+        - apache2
+        - libapache2-mod-php
+      state: latest
+  - name: install nginx
+    tags: nginx, install
+    apt:
+      name: nginx
+      state: absent
