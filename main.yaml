@@ -5,10 +5,18 @@
   tasks:
 
   - name: update repository for ubuntu
-    tags: always, ubuntu, update, package, apt
+    tags: ubuntu, update, package, apt
     apt:
       update_cache: yes
    # when: ansible_distribution_version
+
+  - name: push the default html file to the server
+    tags: rsync, html, apache, apache2
+    ansible.posix.synchronize:
+      src: /home/yume/globalrise/ansible/files/default_site.html
+      dest: /var/www/html/index.html
+      mode: push
+    become: false
 
   - name: install apache2 package
     tags: apache, php, apache2, install
